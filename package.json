@@ -2,14 +2,19 @@
   "name": "@bun-examples/elysia",
   "version": "1.0.50",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "generate": "bun prisma db push",
     "dev": "bun run --watch src/index.ts"
   },
   "dependencies": {
-    "elysia": "latest"
+    "@elysiajs/cors": "^1.0.2",
+    "@prisma/client": "^5.13.0",
+    "elysia": "latest",
+    "mysql": "^2.18.1"
   },
   "devDependencies": {
-    "bun-types": "latest"
+    "body-parser": "^1.20.2",
+    "bun-types": "latest",
+    "prisma": "^5.13.0"
   },
   "module": "src/index.js",
   "bun-create": {
