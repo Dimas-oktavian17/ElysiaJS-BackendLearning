@@ -1,4 +1,4 @@
-export interface Books {
+interface Books {
      id?: number;
      title: string;
      author: string;
@@ -7,3 +7,9 @@ export interface Books {
      InsertAt?: string | Date;
      UpdateAt?: string | Date;
 }
+interface ErrResponse {
+     status: string
+     message: string
+}
+
+export { Books, ErrResponse }
