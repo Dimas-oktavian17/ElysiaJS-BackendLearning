@@ -1,12 +1,9 @@
 import { Elysia } from "elysia";
 import { PrismaClient } from '@prisma/client';
 import { cors } from '@elysiajs/cors'
-interface Post {
-     id?: number;
-     name: string;
-     email: string;
-     path: string;
-}
+import { Books } from './Interface/interface';
+import { getAllBooks } from './handler';
+
 // ? Create a new prisma client
 const prisma = new PrismaClient({
      log: ["info", "warn", "error"]
@@ -15,27 +12,27 @@ const prisma = new PrismaClient({
 const app = new Elysia().decorate('db', prisma)
 app.use(cors())
 // * fetch all posts 
-app.get('/posts', ({ db }) => db.user.findMany())
+app.get('/books', async ({ db }) => getAllBooks(db))
      // * fetch a single post
-     .get('/posts/:id', ({ db, params }) => db.user.findUnique({ where: { id: Number(params.id) } }))
+     .get('/posts/:id', ({ db, params }) => db.books.findUnique({ where: { id: Number(params.id) } }))
      // * fetch a single post by path
-     .get('/posts/path/:path', ({ db, params }) => db.user.findUnique({ where: { email: String(params.path) } }))
+     .get('/posts/path/:path', ({ db, params }) => db.books.findUnique({ where: { email: String(params.path) } }))
      // * create a post 
      .post('/posts', ({ db, body }) => {
-          return db.user.create({
-               data: body as Post
+          return db.books.create({
+               data: body as Books
           })
      })
      // * update a post
      .put('/posts/:id', ({ db, params, body }) => {
-          return db.user.update({
+          return db.books.update({
                where: { id: Number(params.id) },
-               data: body as Post
+               data: body as Books
           })
      })
      // * delete a post
      .delete('/posts/:id', ({ db, params }) => {
-          return db.user.delete({
+          return db.books.delete({
                where: { id: Number(params.id) }
           })
      })
