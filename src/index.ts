@@ -1,15 +1,9 @@
 import { Elysia } from "elysia";
 import { PrismaClient } from '@prisma/client';
 import { cors } from '@elysiajs/cors'
-interface Books {
-     id?: number;
-     title: string;
-     author: string;
-     year: number;
-     read: boolean;
-     InsertAt?: string | Date;
-     UpdateAt?: string | Date;
-}
+import { Books } from './Interface/interface';
+import { getAllBooks } from './handler';
+
 // ? Create a new prisma client
 const prisma = new PrismaClient({
      log: ["info", "warn", "error"]
@@ -18,7 +12,7 @@ const prisma = new PrismaClient({
 const app = new Elysia().decorate('db', prisma)
 app.use(cors())
 // * fetch all posts 
-app.get('/posts', ({ db }) => db.books.findMany())
+app.get('/books', async ({ db }) => getAllBooks(db))
      // * fetch a single post
      .get('/posts/:id', ({ db, params }) => db.books.findUnique({ where: { id: Number(params.id) } }))
      // * fetch a single post by path
