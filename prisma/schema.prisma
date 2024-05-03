@@ -12,9 +12,12 @@ datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
-model User {
+model Books {
   id    Int  @id @default(autoincrement())
-  email String  @unique
-  name  String?
-  path String?
+  title String  
+  author  String
+  year Int
+  read Boolean
+  InsertAt String
+  UpdateAt String
 }
