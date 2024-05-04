@@ -1,15 +1,16 @@
 interface Books {
-     id?: number;
+     id?: String;
      title: string;
      author: string;
      year: number;
      read: boolean;
-     InsertAt?: string | Date;
-     UpdateAt?: string | Date;
+     InsertAt?: Date;
+     UpdateAt?: Date;
 }
 interface ErrResponse {
      status: string
-     message: string
+     message?: string
+     error?: string
 }
 
 export { Books, ErrResponse }
