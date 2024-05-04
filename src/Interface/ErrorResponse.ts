@@ -12,6 +12,10 @@ const ErrPutIdResponse: ErrResponse = {
      status: "fail",
      message: "Gagal memperbarui buku. Id tidak ditemukan"
 }
+const ErrDeleteIdResponse: ErrResponse = {
+     status: "fail",
+     message: "Buku gagal dihapus. Id tidak ditemukan"
+}
 
 const CatchErrorResponse = (error: unknown): ErrResponse => {
      return {
@@ -19,4 +23,4 @@ const CatchErrorResponse = (error: unknown): ErrResponse => {
           error: `${error}`
      };
 }
-export { ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse, CatchErrorResponse }
+export { ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse, ErrDeleteIdResponse, CatchErrorResponse }

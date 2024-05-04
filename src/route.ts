@@ -1,7 +1,7 @@
 import { Elysia, t } from "elysia";
 import { cors } from '@elysiajs/cors'
 // ? Method, and data 
-import { getAllBooks, getIdBooks, postBooks, putIdBooks } from './handler';
+import { deleteIdBooks, getAllBooks, getIdBooks, postBooks, putIdBooks } from './handler';
 import { prisma } from '../prisma/PrismaClient';
 
 // ? init elysia client
@@ -29,12 +29,8 @@ app.get('/books', async ({ db }) => getAllBooks(db))
           })
 
      })
-     // // * delete a post
-     // .delete('/posts/:id', ({ db, params }) => {
-     //      return db.books.delete({
-     //           where: { id: Number(params.id) }
-     //      })
-     // })
+     // * delete a Books
+     .delete('/books/:id', ({ db, params, error }) => deleteIdBooks(db, params, error))
      // * handle errors
      .onError(({ code }) => code === 'NOT_FOUND' && 'Route not found :(')
      // * listening to events

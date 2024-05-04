@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { Books } from './Interface/interface';
-import { CatchErrorResponse, ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse } from './Interface/ErrorResponse';
+import { CatchErrorResponse, ErrDeleteIdResponse, ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse } from './Interface/ErrorResponse';
 //  * GetALLBooks
 const getAllBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>) => {
      try {
@@ -77,4 +77,21 @@ const putIdBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[];
           CatchErrorResponse(error)
      }
 }
-export { getAllBooks, getIdBooks, postBooks, putIdBooks }
+const deleteIdBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>, params: Record<"id", string>, error: any) => {
+     try {
+          const FindBookID = await db.books.findUnique({ where: { id: params.id } })
+          // ? Checking if the book not exists throw error response
+          if (!FindBookID) return error(404, ErrDeleteIdResponse)
+          const BookID = await db.books.delete({
+               where: { id: params.id }
+          })
+          return {
+               "status": "success",
+               "message": "Buku berhasil dihapus"
+          }
+     } catch (error) {
+          // ? Handle any errors that occur during the database operation
+          CatchErrorResponse(error)
+     }
+}
+export { getAllBooks, getIdBooks, postBooks, putIdBooks, deleteIdBooks }
