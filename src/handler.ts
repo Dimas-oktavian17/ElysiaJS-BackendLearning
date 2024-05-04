@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { Books } from './Interface/interface';
-import { CatchErrorResponse, ErrGetResponse, ErrPostNameResponse } from './Interface/ErrorResponse';
+import { CatchErrorResponse, ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse } from './Interface/ErrorResponse';
 //  * GetALLBooks
 const getAllBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>) => {
      try {
@@ -58,4 +58,23 @@ const postBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; 
           error(400, ErrPostNameResponse)
      }
 }
-export { getAllBooks, getIdBooks, postBooks }
+// * PutBooksID
+const putIdBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>, params: Record<"id", string>, body: unknown, error: any) => {
+     try {
+          const FindBookID = await db.books.findUnique({ where: { id: params.id } })
+          // ? Checking if the book not exists throw error response
+          if (!FindBookID) return error(404, ErrPutIdResponse)
+          const BookID = await db.books.update({
+               where: { id: params.id },
+               data: body as Books
+          })
+          return {
+               status: "success",
+               message: "Buku berhasil diperbarui"
+          }
+     } catch (error) {
+          // ? Handle any errors that occur during the database operation
+          CatchErrorResponse(error)
+     }
+}
+export { getAllBooks, getIdBooks, postBooks, putIdBooks }
