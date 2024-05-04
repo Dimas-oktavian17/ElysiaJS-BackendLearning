@@ -2,8 +2,6 @@ import { PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
 import { Books } from './Interface/interface';
 import { CatchErrorResponse, ErrGetResponse, ErrPostNameResponse } from './Interface/ErrorResponse';
-// import { InsertAt, UpdateAt, id } from './Helper/Utility';
-
 //  * GetALLBooks
 const getAllBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>) => {
      try {
@@ -27,7 +25,7 @@ const getAllBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]
 // * GetBooksByID
 const getIdBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>, params: Record<"id", string>, error: any) => {
      try {
-          const BookID = await db.books.findUnique({ where: { id: Number(params.id) } })
+          const BookID = await db.books.findUnique({ where: { id: params.id } })
           // ? Checking if the book exists showing the books
           return BookID !== null ? {
                status: "success",
@@ -58,7 +56,6 @@ const postBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; 
      } catch (err) {
           // ? Handle any errors that occur during the database operation
           error(400, ErrPostNameResponse)
-          // CatchErrorResponse(error)
      }
 }
 export { getAllBooks, getIdBooks, postBooks }
