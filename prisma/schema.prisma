@@ -22,3 +22,25 @@ model Books {
   InsertAt DateTime @default(now())
   UpdateAt DateTime @updatedAt
 }
+model Roles {
+  id       String    @id @default(uuid())
+  name     String
+  users    Users[]
+  InsertAt DateTime  @default(now())
+  UpdateAt DateTime  @updatedAt
+  
+  @@map("Roles") // Map to an existing table named "Roles" if needed
+}
+
+model Users {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  email     String   @unique
+  password  String
+  role      Roles?   @relation(fields: [role_id], references: [id], onDelete: Cascade, onUpdate: Cascade)
+  role_id   String?
+  InsertAt  DateTime @default(now())
+  UpdateAt  DateTime @updatedAt
+
+  @@map("Users") // Map to an existing table named "Users" if needed
+}

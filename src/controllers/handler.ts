@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { DefaultArgs } from '@prisma/client/runtime/library';
-import { Books } from './Interface/interface';
-import { CatchErrorResponse, ErrDeleteIdResponse, ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse } from './Interface/ErrorResponse';
+import { Books } from '../Interface/interface';
+import { CatchErrorResponse, ErrDeleteIdResponse, ErrGetResponse, ErrPostNameResponse, ErrPutIdResponse } from '../Interface/ErrorResponse';
 //  * GetALLBooks
 const getAllBooks = async (db: PrismaClient<{ log: ("error" | "info" | "warn")[]; }, never, DefaultArgs>) => {
      try {
