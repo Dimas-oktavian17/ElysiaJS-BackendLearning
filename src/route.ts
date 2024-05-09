@@ -1,12 +1,21 @@
 import { Elysia, t } from "elysia";
 import { cors } from '@elysiajs/cors'
+import { logger } from '@grotto/logysia';
 // ? Method, and data 
-import { deleteIdBooks, getAllBooks, getIdBooks, postBooks, putIdBooks } from './handler';
+import { deleteIdBooks, getAllBooks, getIdBooks, postBooks, putIdBooks } from './controllers/handler';
 import { prisma } from '../prisma/PrismaClient';
 
 // ? init elysia client
 const app = new Elysia().decorate('db', prisma)
 app.use(cors())
+app.use(logger({
+     logIP: false,
+     writer: {
+          write(msg: string) {
+               console.log(msg)
+          }
+     }
+}))
 // * fetch all Books
 app.get('/books', async ({ db }) => getAllBooks(db))
      // * fetch a single Books
