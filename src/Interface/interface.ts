@@ -1,4 +1,4 @@
-interface Books {
+type Books = {
      id?: string;
      title: string;
      author: string;
@@ -7,7 +7,7 @@ interface Books {
      InsertAt?: Date;
      UpdateAt?: Date;
 }
-interface ErrResponse {
+type ErrResponse = {
      status: string
      message?: string
      error?: string
