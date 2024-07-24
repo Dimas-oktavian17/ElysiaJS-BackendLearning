@@ -3,7 +3,7 @@ type Books = {
      title: string;
      author: string;
      year: number;
-     read: boolean;
+     read?: boolean;
      InsertAt?: Date;
      UpdateAt?: Date;
 }
